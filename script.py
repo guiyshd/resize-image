@@ -1,25 +1,17 @@
+import os, glob, sys
 from PIL import Image
 
-baseCalculo = (300/2)
 
-img = Image.open('images/fullsized_image.png')
-width, height = img.size
-print(img.size)
-le = (width/2)-baseCalculo
-up = (height/2)-baseCalculo
-ri = (width/2)-baseCalculo
-lo = (height/2)-baseCalculo
+def resize(width, height):
+    """Return resized image"""
+    for infile in glob.glob('images/*.jpg'):
+        try:
+            im = Image.open(infile)
+            im.thumbnail([width, height], Image.ANTIALIAS)
+            im.save('images/' + ".jpg", "JPG")
+        except IOError:
+            print("Cannot create thumbnail for '%s'" % infile)
+    return
 
-# area = (le, up, ri, lo)
-# print(area)
-# img_crop = img.crop(area)
-# print(img_crop.size)
 
-(left, upper, right, lower) = (le, up, width-ri, height-lo)
-
-# Here the image "im" is cropped and assigned to new variable im_crop
-im_crop = img.crop((left, upper, right, lower))
-print(im_crop.size)
-
-im_crop.save('images/resized_image.png')
-# img_crop.save('images/resized_image.png')
+resize(300, 300)

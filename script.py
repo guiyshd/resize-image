@@ -2,18 +2,21 @@ import os, glob, sys
 from PIL import Image
 
 
-width, height = (300, 300)
+basewidth = 300
 
 for infile in glob.glob('.\images\*.png'):
     try:
         file, ext = os.path.splitext(infile)
-        im = Image.open(infile)
+        img = Image.open(infile)
 
-        if im.size[0] < 300:
-            height = im.height-height
+        if img.size[0] < img.size[1]:
 
-        im.thumbnail([width, height], Image.ANTIALIAS)
-        print(im.size)
-        im.save(file + '.png', "PNG")
+
+
+        wpercent = (basewidth/float(img.size[0]))
+        hsize = int((float(img.size[1])*float(wpercent)))
+        img = img.resize((basewidth,hsize), Image.ANTIALIAS)
+        print(img.size)
+        img.save(file + '.png', "PNG")
     except IOError:
         print("Cannot create thumbnail for '%s'" % infile)

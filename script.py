@@ -11,7 +11,7 @@ def crop_center(pil_img, crop_width, crop_height):
 
 basewidth = 300
 
-for infile in glob.glob('.\images\*.png'):
+for infile in glob.glob('.\images\*.jpg'):
     try:
         file, ext = os.path.splitext(infile)
         img = Image.open(infile)
